@@ -79,13 +79,26 @@ Extended the base reward function to incentivize precise flying:
 ## Tech Stack
 
 - Python
+- Pygame
 - Q-Learning (tabular)
 - Epsilon-greedy exploration strategy
 
 ## Project Structure
 
 ```
-├── README.md
-└── DCCanario/    # Q-Learning agent implementation
+├── agent.py            # Q-Learning agent + training loop
+├── flappy_bird.py      # Game engine with reward system
+├── resources/           # Sprites, fonts, and background assets
+├── requirements.txt
+└── README.md
 ```
+
+## Getting Started
+
+```bash
+pip install -r requirements.txt
+python agent.py
+```
+
+Set `VISUALIZATION = False` in `agent.py` to train without rendering (much faster).
 
