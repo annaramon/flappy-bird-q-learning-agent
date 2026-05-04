@@ -37,11 +37,11 @@ The agent uses a decaying exploration rate:
 
 Systematically tested the impact of each parameter:
 
-| Parameter | Problem | Solution |
-|---|---|---|
-| `DISCOUNT_RATE = 0` | Agent only considers immediate rewards — crashes into ceiling every game | Increased to **0.9** — agent learned to anticipate upcoming pipes |
-| `LR = 0.3` | Q-values update too aggressively, unstable learning | Reduced to **0.2** — smoother convergence |
-| `LR = 0.001` | Q-values barely differentiate between actions, needs millions of episodes | Too conservative for this state space |
+| Parameter           | Problem                                                                   | Solution                                                          |
+| ------------------- | ------------------------------------------------------------------------- | ----------------------------------------------------------------- |
+| `DISCOUNT_RATE = 0` | Agent only considers immediate rewards — crashes into ceiling every game  | Increased to **0.9** — agent learned to anticipate upcoming pipes |
+| `LR = 0.3`          | Q-values update too aggressively, unstable learning                       | Reduced to **0.2** — smoother convergence                         |
+| `LR = 0.001`        | Q-values barely differentiate between actions, needs millions of episodes | Too conservative for this state space                             |
 
 ### Final Configuration
 
@@ -59,16 +59,14 @@ EXPLORATION_DECAY_RATE = 0.00015
 
 Extended the base reward function to incentivize precise flying:
 
-| Event | Reward | Rationale |
-|---|:---:|---|
-| Pass through a pipe | +50 | Primary objective |
-| Move toward pipe gap | +1 | Encourage correct positioning |
-| Move away from pipe gap | -1 | Discourage wrong direction |
-| Collide with pipe or boundary | -1 | Penalize failure |
-| **Fly through center of gap** | **+10** | **Reward precision, not just survival** |
-| **Unnecessary altitude change** | **-1** | **Penalize erratic movement** |
+| Event                         | Reward | Rationale                     |
+| ----------------------------- | :----: | ----------------------------- |
+| Pass through a pipe           |  +50   | Primary objective             |
+| Move toward pipe gap          |   +1   | Encourage correct positioning |
+| Move away from pipe gap       |   -1   | Discourage wrong direction    |
+| Collide with pipe or boundary |   -1   | Penalize failure              |
 
-**Design principle:** Penalties stay low to avoid suppressing exploration. Precision rewards are higher to guide the agent toward optimal trajectories, not just "good enough" ones.
+**Design principle:** Penalties stay low to avoid suppressing exploration. The large pass-through reward (+50) dominates, keeping the agent focused on the primary objective without over-constraining its trajectory.
 
 ## Results
 
@@ -101,4 +99,3 @@ python agent.py
 ```
 
 Set `VISUALIZATION = False` in `agent.py` to train without rendering (much faster).
-
